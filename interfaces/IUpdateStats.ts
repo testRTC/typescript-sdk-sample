@@ -2,6 +2,7 @@ import { ITestRTCStats } from './ITestRTCStats';
 import { SDK } from '../sdk';
 
 export interface IStatsChunk {
+  timestamp: string;
   channelName: string;
   bytes: number;
   jitter: number;
