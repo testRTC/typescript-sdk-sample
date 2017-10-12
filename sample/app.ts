@@ -7,4 +7,9 @@ import { SampleGenerator } from './input_samples/sample_generator';
 const collector = new Collector();
 const sg = new SampleGenerator();
 const sample: IStatsChunk[] = sg.generate(10);
-console.log(sample);
+
+for (let i = 0; i < sample.length; i++) {
+  collector.push(sample[i]);
+}
+
+const results: IStatsChunk[] = collector.get();

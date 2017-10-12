@@ -12,11 +12,7 @@ export class Collector implements ICollector {
   }
 
   pop(): IStatsChunk | boolean {
-    if (this._stack.length) {
-      return this._stack.pop();
-    } else {
-      return false;
-    }
+    return this._stack.pop() || false;
   }
 
   get(): IStatsChunk[] {
