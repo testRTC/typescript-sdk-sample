@@ -1,7 +1,7 @@
 'use strict';
 import { IStatsChunk } from '../../interfaces/IUpdateStats';
 
-class SampleGenerator {
+export class SampleGenerator {
   private _samples: IStatsChunk[] = [];
 
   constructor() {}

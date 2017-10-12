@@ -2,15 +2,16 @@
   "compilerOptions": {
     "target": "es6",
     "declaration": false,
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "preserveConstEnums": true,
     "removeComments": true,
-    "outFile": "./dist/build.js"
+    "outDir": "./dist/"
   },
   "include": [
-    "./sdk.ts"
+    "./sdk.ts",
+    "./sample/app.ts"
   ],
   "exclude": [
     "node_modules"
