@@ -2,3 +2,4 @@ node_modules/
 notes/
 dist/
 sample/node_modules
+**/*.sw[op]
