@@ -17,7 +17,7 @@ export class SampleGenerator {
 
 
     for (let i = 0; i < _count; i++) {
-      const chunk: IStatsChunk = {
+      const chunk: any = {
         timestamp: Date.now().toString(),
         channelName: 'ssrc_something_1',
         bytes: 4,

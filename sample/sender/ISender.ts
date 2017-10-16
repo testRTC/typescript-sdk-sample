@@ -1,11 +1,11 @@
 'use strict';
 
-interface IResponse {
+export interface IResponse {
   status: string,
   message: string;
 }
 
-interface ISender {
-  get(): void; // get
-  send(url: string, body: any): IResponse; // post
+export interface ISender {
+  send(url: string, body: any): Promise<IResponse>;
+	prepareResponse(rawResponse: any): IResponse;
 }
