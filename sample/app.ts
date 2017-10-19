@@ -2,6 +2,7 @@ import * as request from 'request';
 import * as path from 'path';
 import { Collector } from './collector/Collector';
 import { IStatsChunk, IConnection, IExtra } from '../interfaces/IUpdateStats';
+import { Sender } from './sender/Sender';
 
 import { SampleGenerator } from './input_samples/sample_generator';
 import { SampleReader } from './input_samples/sample_reader';
@@ -83,7 +84,10 @@ for (const connId of Object.getOwnPropertyNames(file)) {
 
 collector.readFromFile().then(
   res => {
-    debugger;
+
+    // Send data to remote server
+    const sender = new Sender('https://api.testrtc.com/v1s2', '53218617-d178-4511-abc2-a3d5db02107f');
+    sender.send(res);
     console.log(`Done`);
   }
 );

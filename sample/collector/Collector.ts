@@ -81,8 +81,7 @@ export class Collector implements ICollector {
 
   }
 
-  // TODO: implement this
-  private processCollectedData(base: IStatsChunk, chunk: IStatsChunk): void {
+  private processCollectedData(base: any, chunk: any): void {
     const merge = (base: IStatsChunk, chunk: IStatsChunk): void => {
       for (let prop of Object.getOwnPropertyNames(chunk)) {
         for (let _prop of Object.getOwnPropertyNames(chunk[prop])) {
@@ -104,9 +103,9 @@ export class Collector implements ICollector {
       }
     };
 
-    debugger;
     if (!(chunk.connId in base)) {
-      base[chunk.connId] = <IStatsChunk>{
+      base[chunk.connId] = {
+        channelId: chunk.connId,
         extra: {},
         stat: {},
         time: []

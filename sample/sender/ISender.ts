@@ -6,6 +6,6 @@ export interface IResponse {
 }
 
 export interface ISender {
-  send(url: string, body: any): Promise<IResponse>;
+  send(body: any): Promise<IResponse>;
 	prepareResponse(rawResponse: any): IResponse;
 }
