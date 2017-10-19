@@ -65,6 +65,9 @@ const slice = (arrRef, start, end): IStatsChunk => {
 				}
 			});
 		}
+
+    // clicnt prop
+    resultObj.client = arrRef.client;
 	});
 
 	return resultObj;
@@ -77,6 +80,7 @@ for (const connId of Object.getOwnPropertyNames(file)) {
   for (let i = 0; i < 10; i++) {
 		let perSecondChunk: IStatsChunk = slice(currentChunk, i, i + 1);
     perSecondChunk = Object.assign({}, perSecondChunk, { connId });
+    debugger;
     collector.push(perSecondChunk);
   }
 

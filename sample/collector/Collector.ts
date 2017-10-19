@@ -37,6 +37,7 @@ export class Collector implements ICollector {
 		try {
       const data: IStatsChunk[] = this._stack.slice();
 			const _chunk: any = `${JSON.stringify(data[data.length - 1])}\n`;
+      debugger;
 			fs.appendFileSync(this._filePath, _chunk);
 		} catch (err) {
 			console.log(`Writing file exception: ${err}`);
@@ -72,6 +73,7 @@ export class Collector implements ICollector {
         .on('line', async line => {
           const parsedLine: IStatsChunk = JSON.parse(line);
           // here should be function which creates object for sending
+          debugger;
           this.processCollectedData(_base, parsedLine);
         })
         .on('close', () => {
@@ -103,6 +105,7 @@ export class Collector implements ICollector {
       }
     };
 
+    debugger;
     if (!(chunk.connId in base)) {
       base[chunk.connId] = {
         channelId: chunk.connId,
