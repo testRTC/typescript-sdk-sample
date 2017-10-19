@@ -1,6 +1,6 @@
 'use strict';
 
-import { ISender, IResponse } from './ISender';
+import { ISender } from './ISender';
 import { IStatsChunk } from '../../interfaces/IUpdateStats';
 import * as request from 'request-promise';
 
@@ -11,10 +11,6 @@ export class Sender implements ISender {
 
   constructor(private _baseUrl: string, private _apiKey: string) {}
 
-  prepareResponse(rawResponse: any): IResponse {
-    return rawResponse;
-  }
-
   // /test/remote/run for getting test run id
   // /testruns/remote/testRunId/customer_stats for getting stats from client
 
@@ -22,7 +18,7 @@ export class Sender implements ISender {
     // getting test run id
     let testRunId: any;
     try {
-      console.log(`gonna ask: ${this._baseUrl}${this._testRunIdUrl}`);
+      console.log(`Asking for test run id: ${this._baseUrl}${this._testRunIdUrl}`);
       testRunId = await request.post({
         uri: `${this._baseUrl}${this._testRunIdUrl}`,
         json: true,
@@ -36,11 +32,11 @@ export class Sender implements ISender {
       console.log(`Error getting test run id: ${err}`);
     }
 
-    // TODO: send stats 
+    // sending collected stats
     if (testRunId) {
       this._uploadUrl = this._uploadUrl.replace('TEST_RUN_ID', testRunId.testRunId);
       try {
-        console.log(`gonna ask: ${this._baseUrl}${this._uploadUrl}`);
+        console.log(`Sending collected stats: ${this._baseUrl}${this._uploadUrl}`);
         const rawResponse: any = await request.post({
           uri: `${this._baseUrl}${this._uploadUrl}`,
           json: true,
