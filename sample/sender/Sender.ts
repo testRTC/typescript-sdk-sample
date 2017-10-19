@@ -35,24 +35,25 @@ export class Sender implements ISender {
     } catch (err) {
       console.log(`Error getting test run id: ${err}`);
     }
-    debugger;
 
     // TODO: send stats 
     if (testRunId) {
       this._uploadUrl = this._uploadUrl.replace('TEST_RUN_ID', testRunId.testRunId);
       try {
-        debugger;
         console.log(`gonna ask: ${this._baseUrl}${this._uploadUrl}`);
         const rawResponse: any = await request.post({
           uri: `${this._baseUrl}${this._uploadUrl}`,
           json: true,
-          body: { data: data, isLastChunk: true, sysInfo: {} },
+          body: { data: data, isLastChunk: true, sysInfo: {
+            OS: 'Linux', // stub data
+            browserName: 'Chrome', // stub data
+            browserVersion: '62.0.1.34' // stub data
+          } },
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
             'apikey': this._apiKey
           }
         });
-        debugger;
       } catch (err) {
         console.log(`Error sending data to server: ${err}`);
       }
@@ -61,7 +62,6 @@ export class Sender implements ISender {
       console.log(`No test run id received`);
     }
 
-    debugger;
     return new Promise( (resolve, reject) => {
       return resolve({});
     });

@@ -12,6 +12,7 @@ export interface IExtra {
 	}
 };
 
+// TODO: need to add additional props for audio and video
 export interface IConnection {
 	bytesRecieved: any[]; // [null, "number"]
 	bytesSent: any[]; // [null, "number"]
@@ -37,7 +38,8 @@ export interface IConnection {
 }
 
 interface IStat {
-	[channelName: string]: IConnection;
+	[channelName: string]: IConnection; // like "ssrc_1948310164_send"
+
 };
 
 interface ITime {
@@ -52,19 +54,6 @@ export interface IStatsChunk{
 	stat: IStat;
 	time: ITime[];
 };
-
-export interface IStatsChunkOLD {
-  timestamp: string;
-  channelName: string;
-  bytes: number;
-  jitter: number;
-  rtt: number;
-  loss: number;
-  media: string; // audio | video
-  direction: string; // send | recv
-  videoResolution?: string;
-  videoFrameRate?: number;
-}
 
 export interface IUploadStats {
   appendStats( chunk: IStatsChunk ): SDK;

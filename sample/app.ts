@@ -66,7 +66,7 @@ const slice = (arrRef, start, end): IStatsChunk => {
 			});
 		}
 
-    // clicnt prop
+    // client prop
     resultObj.client = arrRef.client;
 	});
 
@@ -77,10 +77,9 @@ const collector: Collector = new Collector({ saveToFile: true });
 
 for (const connId of Object.getOwnPropertyNames(file)) {
   const currentChunk: IStatsChunk = file[connId];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) { // take only 10 seconds
 		let perSecondChunk: IStatsChunk = slice(currentChunk, i, i + 1);
     perSecondChunk = Object.assign({}, perSecondChunk, { connId });
-    debugger;
     collector.push(perSecondChunk);
   }
 
@@ -88,10 +87,16 @@ for (const connId of Object.getOwnPropertyNames(file)) {
 
 collector.readFromFile().then(
   res => {
-
     // Send data to remote server
     const sender = new Sender('https://api.testrtc.com/v1s2', '53218617-d178-4511-abc2-a3d5db02107f');
-    sender.send(res);
-    console.log(`Done`);
+    for (let prop in res) {
+      if (res.hasOwnProperty(prop)) {
+        res[prop].client = 'webkit';
+      }
+    }
+
+    sender.send(res).then( res => {
+      console.log(`Done`);
+    });
   }
 );
