@@ -1,0 +1,17 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "description": "Sample app for testRTC SDK",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc ./dist/sample/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kl65us",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^8.0.47",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}
