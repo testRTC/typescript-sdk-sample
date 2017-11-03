@@ -4,8 +4,9 @@
   "description": "Sample app for testRTC SDK",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc ./dist/sample/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "node --inspect ./dist/sample/app.js",
+    "debug-pause": "node --inspect --debug-brk ./dist/sample/app.js",
+    "watch": "tsc -w"
   },
   "author": "kl65us",
   "license": "ISC",
