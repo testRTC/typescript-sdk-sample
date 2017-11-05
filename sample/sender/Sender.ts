@@ -42,8 +42,8 @@ export class Sender implements ISender {
           json: true,
           body: { data: data, isLastChunk: true, sysInfo: {
             OS: 'Linux', // stub data
-            browserName: 'Chrome', // stub data
-            browserVersion: '62.0.1.34' // stub data
+            browserName: 'SDK', // stub data
+            browserVersion: '0.0.1' // stub data
           } },
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
