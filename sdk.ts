@@ -4,7 +4,17 @@ import {} from './'
 
 // INFO: sample for customer how he/she should interact with testRTC SDK
 export class SDK implements IUploadStats {
-  constructor() {}
+  private _testRunIdUrl: string = '/tests/remote/run'; 
+  private _uploadUrl: string = '/testruns/remote/TEST_RUN_ID/stats';
+  private _testRunName: string = `customerTestRunName`;
+
+  constructor(_apiKey: string) {
+    this.getTestRunId();
+  }
+
+  // calling testRTC api and getting test run id
+  private getTestRunId(): Promise<{ testRunId: string }> {
+  }
 
   // should be called each second during a call
   // chunk contain stats data per second
@@ -17,6 +27,7 @@ export class SDK implements IUploadStats {
   // customer calls this method if call ended
   // returns promise as customer code should reach 
   // testRTC endpoint and send there its stats
+  // uses private props to form proper url and end there stats
   finish(): Promise<boolean> {
     return false;
   }
