@@ -15,7 +15,9 @@ export class SDK implements IUploadStats {
   }
 
   // customer calls this method if call ended
-  finish(): boolean {
+  // returns promise as customer code should reach 
+  // testRTC endpoint and send there its stats
+  finish(): Promise<boolean> {
     return false;
   }
 

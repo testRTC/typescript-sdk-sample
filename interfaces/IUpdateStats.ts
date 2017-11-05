@@ -1,45 +1,27 @@
-import { ITestRTCStats } from './ITestRTCStats';
 import { SDK } from '../sdk';
 
-export interface IExtra {
-	localDescription: {
-		sdp: string;
-		type: string;
-	};
-	remoteDescription: {
-		sdp: string;
-		type: string;
-	}
-};
-
-// TODO: need to add additional props for audio and video
+// IConnection contains optional props. Their mandatory depends on type of channel
+// either it's video or audio
 export interface IConnection {
-	bytesRecieved: any[]; // [null, "number"]
-	bytesSent: any[]; // [null, "number"]
-	consentRequestsSent: string; // "1"
-	googActiveConnection: string; // "true" or "false"
-	googChannelId: string; // "Channel-audio-1"
-	googLocalAddress: any[]; // "172.17.0.3:36776" or null
-	googLocalCandidateType: string; // "local"
-	googRtt: any[]; // "number" or null
-	googTransportType: string; // "udp"
-	googWritable: string; // "true" or "false"
-	id: string; // "Channel-audio-1"
-	localCandidateId: any[]; // like "Cand-ntBJ1Ijp"
-	packetsDiscardedOnSend: string; // "0"
-	packetsSent: any[]; // "string" or null
-	remoteCandidateId: any[]; // like "Cand-StD1OFRx" or null
-	requestsReceived: any[]; // "number" or null
-	requestSent: any[]; // "number" or null
-	responsesRecieved: any[]; // "number" or null
-	responsesSent: any[]; // "number" or null
-	timestamp: any[]; // "string" or null
-	type: string; // "googCandidatePair"
+  googCodecName: string;
+  packetsSent: number[];
+  packetsReceived: number[];
+  bytesSent: number[];
+	bytesReceived: number[];
+  packetsLost: number;
+  googRtt: number[];
+  googJitterReceived: number[];
+
+  googFrameWidthSend?: number[];
+  googFrameHeightSent?: number[];
+  googFrameRateSent?: number[];
+  googFrameWidthReceived?: number[];
+  googFrameHeightReceived?: number[];
+  googFrameRateReceived?: number[];
 }
 
 interface IStat {
 	[channelName: string]: IConnection; // like "ssrc_1948310164_send"
-
 };
 
 interface ITime {
@@ -47,15 +29,14 @@ interface ITime {
 	timestamp: number; // ms
 }
 
-export interface IStatsChunk{
-	channelId: string; // "0"
-	client: string; // "wbekit" by default
-	extra: IExtra;
+export interface IStatsChunk {
+	channelId: string; // like "0"
+	client: string; // "webkit" by default
 	stat: IStat;
 	time: ITime[];
 };
 
 export interface IUploadStats {
   appendStats( chunk: IStatsChunk ): SDK;
-  finish(): boolean;
+  finish(): Promise<boolean>;
 };
