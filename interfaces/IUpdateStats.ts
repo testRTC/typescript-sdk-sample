@@ -36,6 +36,33 @@ export interface IStatsChunk {
 	time: ITime[];
 };
 
+// SDK interface, should be impleneted by customer
+export interface ITestRTCSDK {
+  init( apiKey: string ): ITestRTCSDK;
+  append( // remember to use client: 'webkit' by default
+    connId: number, // old channelId title
+    channelName: string,
+    timestamp: number, // should be passed by customer because can be delay in ts
+
+    googCodecName: string,
+    packetsSent: number[],
+    packetsReceived: number[],
+    bytesSent: number[],
+    bytesReceived: number[],
+    packetsLost: number,
+    googRtt: number[],
+    googJitterReceived: number[],
+
+    googFrameWidthSend?: number,
+    googFrameHeightSent?: number,
+    googFrameRateSent?: number,
+    googFrameWidthReceived?: number,
+    googFrameHeightReceived?: number,
+    googFrameRateReceived?: number
+  ): ITestRTCSDK;
+  finish(): Promise<boolean>;
+}
+
 export interface IUploadStats {
   appendStats( chunk: IStatsChunk ): SDK;
   finish(): Promise<boolean>;

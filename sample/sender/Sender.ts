@@ -4,37 +4,22 @@ import { ISender } from './ISender';
 import { IStatsChunk } from '../../interfaces/IUpdateStats';
 import * as request from 'request-promise';
 
+// simple implementation of sernder module 
+// which simple sends data via http
 export class Sender implements ISender {
-  private _testRunIdUrl: string = '/tests/remote/run'; // { name: name } as body
-  private _uploadUrl: string = '/testruns/remote/TEST_RUN_ID/stats'; // data, isLastChunk, sysInfo
-  private _testRunName: string = `testRun${Date.now()}`;
+  private _testRunIdUrl: string = '/tests/remote/run';
+  private _uploadUrl: string = '/testruns/remote/TEST_RUN_ID/stats';
+  private _baseUrl: string ='https://api.testrtc.com/v1s2';
 
-  constructor(private _baseUrl: string, private _apiKey: string) {}
+  constructor(private _apiKey: string) {}
 
   // /test/remote/run for getting test run id
   // /testruns/remote/testRunId/customer_stats for getting stats from client
 
-  async send(data: IStatsChunk[]): Promise<any> {
-    // getting test run id
-    let testRunId: any;
-    try {
-      console.log(`Asking for test run id: ${this._baseUrl}${this._testRunIdUrl}`);
-      testRunId = await request.post({
-        uri: `${this._baseUrl}${this._testRunIdUrl}`,
-        json: true,
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'apikey': this._apiKey
-        },
-        body: { name: this._testRunName }
-      });
-    } catch (err) {
-      console.log(`Error getting test run id: ${err}`);
-    }
-
+  async send(data: IStatsChunk[], testRunId: string): Promise<boolean> {
     // sending collected stats
     if (testRunId) {
-      this._uploadUrl = this._uploadUrl.replace('TEST_RUN_ID', testRunId.testRunId);
+      this._uploadUrl = this._uploadUrl.replace('TEST_RUN_ID', testRunId);
       try {
         console.log(`Sending collected stats: ${this._baseUrl}${this._uploadUrl}`);
         const rawResponse: any = await request.post({
@@ -50,16 +35,14 @@ export class Sender implements ISender {
             'apikey': this._apiKey
           }
         });
+        return Promise.resolve(true);
       } catch (err) {
         console.log(`Error sending data to server: ${err}`);
+        return Promise.reject(false);
       }
 
     } else {
       console.log(`No test run id received`);
     }
-
-    return new Promise( (resolve, reject) => {
-      return resolve({});
-    });
   }
 }
